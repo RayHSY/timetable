@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.timeline {
+  width: 60px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.timeline ul {
+  box-sizing: content-box;
+  width: 60px;
+  padding-right: 20px;
+  height: 100%;
+  list-style: none;
+  overflow-y: scroll;
+  text-align: right;
+}
+
+.timeline li {
+  height: 60px;
+  color: rgba(0, 0, 0, .45);
+  position: relative;
+}
+
+.time-context {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+}

@@ -1,0 +1,6 @@
+.cell {
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0, .45);
+  border-top: 0;
+  border-left: 0;
+}

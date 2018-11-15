@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul, li {
+  list-style: none;
+}
+
+.time-table {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.timeline-box {
+  margin-top: 40px;
+}
+
+.timeline-body {
+  width: 100%;
+  height: 100%;
+}
