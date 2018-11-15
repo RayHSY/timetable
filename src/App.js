@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import TimeTable from './components/Table';
 
-const options = {
-}
-
 class App extends Component {
   render() {
     return (

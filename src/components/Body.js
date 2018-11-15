@@ -21,7 +21,7 @@ class Body extends Component {
     super(props);
   }
 
-  renderRows = (currentMoment) => {
+  renderRows = () => {
     return times.map(time => <Row key={time} />);
   }
 
@@ -31,8 +31,8 @@ class Body extends Component {
   }
 
   render () {
-    const { currentMoment, height, onScroll } = this.props;
-    const body = this.renderRows(currentMoment);
+    const { height, onScroll } = this.props;
+    const body = this.renderRows();
     return (
       <div
         className="body"
