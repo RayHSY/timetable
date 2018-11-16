@@ -11,12 +11,14 @@ class TimeTable extends Component {
     height: PropTypes.number,
     headerHeight: PropTypes.number,
     headerWidth: PropTypes.number,
+    data: PropTypes.array,
   }
   static defaultProps = {
     width: 600,
     height: 400,
     headerHeight: 40,
     headerWidth: 60,
+    data: [],
   }
 
   state = {
@@ -56,7 +58,7 @@ class TimeTable extends Component {
   }
 
   render() {
-    const { width, height, headerHeight, headerWidth } = this.props;
+    const { width, height, headerHeight, headerWidth, data } = this.props;
     return (
       <div style={{ width, height }} className="time-table">
         <div className="timeline-box">
@@ -64,7 +66,7 @@ class TimeTable extends Component {
         </div>
         <div className="timeline-body" style={{ width: width - headerWidth }}>
           <Header saveRef={this.saveRef} height={headerHeight} onScroll={this.handleScroll} />
-          <Body saveRef={this.saveRef} height={height - headerHeight} onScroll={this.handleScroll} />
+          <Body data={data} saveRef={this.saveRef} height={height - headerHeight} onScroll={this.handleScroll} />
         </div>
       </div>
     );

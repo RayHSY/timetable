@@ -12,17 +12,28 @@ class Body extends Component {
     currentMoment: PropTypes.object,
     onScroll: PropTypes.func,
     saveRef: PropTypes.func,
+    data: PropTypes.array,
   }
   static defaultProps = {
     currentMoment: moment(),
+    data: [],
   }
 
   constructor (props) {
     super(props);
   }
 
-  renderRows = () => {
-    return times.map(time => <Row key={time} />);
+  renderRows = (data) => {
+    return times.map((time, index) => {
+      const tStartTime = moment(time, 'HH:mm');
+      const tEndTime = moment(times[index + 1], 'HH:mm');
+      const filterData = data.filter(d => {
+        const startTime = moment(d.startTime, 'HH:mm');
+        const endTime = moment(d.endTime, 'HH:mm');
+        return (startTime.isAfter(tStartTime) || startTime.isSame(tStartTime)) && (endTime.isBefore(tEndTime) || endTime.isSame(tEndTime));
+      });
+      return <Row key={time} data={filterData} />;
+    });
   }
 
   bind = (ref) => {
@@ -31,8 +42,8 @@ class Body extends Component {
   }
 
   render () {
-    const { height, onScroll } = this.props;
-    const body = this.renderRows();
+    const { height, onScroll, data } = this.props;
+    const body = this.renderRows(data);
     return (
       <div
         className="body"

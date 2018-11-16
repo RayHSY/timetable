@@ -7,9 +7,11 @@ import './style/row.css';
 class Row extends Component {
   static propTypes = {
     currentMoment: PropTypes.object,
+    data: PropTypes.array,
   }
   static defaultProps = {
     currentMoment: moment(),
+    data: [],
   }
 
   constructor (props) {
@@ -17,15 +19,19 @@ class Row extends Component {
   }
 
   renderCells = (currentMoment) => {
+    const { data } = this.props;
     const dates = [];
-    for (let d = 1; d <= moment(currentMoment).daysInMonth(); d++) {
-      dates.push(moment().set({
-        'year': currentMoment.year(),
-        'date': d,
-        'month': currentMoment.month(),
-      }));
+    for (let date = 1; date <= moment(currentMoment).daysInMonth(); date++) {
+      dates.push({
+        time: moment().set({
+          'year': currentMoment.year(),
+          'date': date,
+          'month': currentMoment.month(),
+        }),
+        data: data.filter(d => moment(d.date).date() === date),
+      });
     }
-    return dates.map(date => <Cell key={date.date()} />);
+    return dates.map(d => <Cell key={d.time.date()} data={d.data} />);
   }
 
   render () {
