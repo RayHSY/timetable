@@ -2,12 +2,41 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { times } from '../contants/utils';
-import './style/timeline.css';
+// import './style/timeline.css';
+
+const timelineCss = {
+  timeline: {
+    width: 60,
+    height: '100%',
+    overflow: 'hidden',
+  },
+  
+  timelineUl: {
+    boxSizing: 'content-box',
+    width: 60,
+    paddingRight: 20,
+    height: '100%',
+    listStyle: 'none',
+    overflowY: 'scroll',
+    textAlign: 'right',
+  },
+  
+  timelineLi: {
+    height: 60,
+    color: 'rgba(0, 0, 0, .45)',
+    position: 'relative',
+  },
+  
+  timeContext: {
+    position: 'absolute',
+    top: -10,
+    left: 10,
+  },
+};
 
 // console.log(styles)
 class Timeline extends Component {
   static propTypes = {
-    height: PropTypes.number,
     onScroll: PropTypes.func,
     currentMoment: PropTypes.object,
     saveRef: PropTypes.fun,
@@ -29,11 +58,11 @@ class Timeline extends Component {
   render () {
     const { onScroll } = this.props;
     return (
-      <div className="timeline">
-        <ul ref={this.bind} onScroll={onScroll}>
-         {
-           times.map(time => <li key={time}><span className="time-context">{time === '00:00' ? null : time}</span></li>)
-         }
+      <div className="timeline" style={timelineCss.timeline}>
+        <ul style={timelineCss.timelineUl} ref={this.bind} onScroll={onScroll}>
+          {
+            times.map(time => <li style={timelineCss.timelineLi} key={time}><span className="time-context" style={timelineCss.timeContext}>{time === '00:00' ? null : time}</span></li>)
+          }
         </ul>
       </div>
     );

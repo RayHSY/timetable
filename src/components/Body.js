@@ -4,7 +4,7 @@ import moment from 'moment';
 import Row from './Row';
 import { times } from '../contants/utils';
 
-import './style/body.css';
+// import './style/body.css';
 
 class Body extends Component {
   static propTypes = {
@@ -51,6 +51,7 @@ class Body extends Component {
         className="body"
         style={{
           height,
+          overflow: 'scroll',
         }}
         onScroll={onScroll}
         ref={this.bind}

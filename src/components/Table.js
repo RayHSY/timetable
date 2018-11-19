@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Timeline from './Timeline';
 import Header from './Header';
 import Body from './Body';
-import './style/common.css';
+import commonCss from './style/common';
 
 class TimeTable extends Component {
   static propTypes = {
@@ -60,11 +60,11 @@ class TimeTable extends Component {
   render() {
     const { width, height, headerHeight, headerWidth, data } = this.props;
     return (
-      <div style={{ width, height }} className="time-table">
-        <div className="timeline-box">
+      <div style={{ ...commonCss.timeTable, width, height }} className="time-table">
+        <div className="timeline-box" style={commonCss.timelineBox}>
           <Timeline saveRef={this.saveRef} onScroll={this.handleScroll} />
         </div>
-        <div className="timeline-body" style={{ width: width - headerWidth }}>
+        <div className="timeline-body" style={{ ...commonCss.timelineBody, width: width - headerWidth }}>
           <Header saveRef={this.saveRef} height={headerHeight} onScroll={this.handleScroll} />
           <Body data={data} saveRef={this.saveRef} height={height - headerHeight} onScroll={this.handleScroll} />
         </div>

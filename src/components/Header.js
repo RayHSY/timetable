@@ -2,7 +2,39 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import './style/header.css';
+// import './style/header.css';
+
+const headerCss = {
+  timeHeader: {
+    width: '100%',
+    height: 50,
+    overflow: 'hidden',
+    borderBottom: '1px solid lightblue',
+  },
+  
+  timeheaderUl: {
+    boxSizing: 'content-box',
+    height: 50,
+    overflowX: 'scroll', 
+    overflowY: 'hidden',
+    paddingBottom: 20, 
+    display: 'flex',
+    flexWrap: 'nowrap',
+    listStyle: 'none',
+  },
+  
+  timeheaderLi: {
+    /* flex: 1, */
+    width: 100,
+    flexShrink: 0,
+    textAlign: 'center',
+    cursor: 'pointer',
+  },
+  
+  date: {
+    marginRight: '1em', 
+  },
+};
 
 class Header extends Component {
   static propTypes = {
@@ -61,19 +93,20 @@ class Header extends Component {
     }
     
     return (
-      <div style={headerSt} className="time-header">
-        <ul ref={this.bind} style={headerSt} onScroll={onScroll}>
+      <div style={{...headerCss.timeHeader, ...headerSt}} className="time-header">
+        <ul ref={this.bind} style={{...headerCss.timeheaderUl, ...headerSt}} onScroll={onScroll}>
          {
            dates.map((date, index) =>
             <li
               style={{
+                ...headerCss.timeheaderLi,
                 ...headerSt,
                 lineHeight: height + 'px',
                 color: index === currentMoment.date() - 1 ? 'red' : 'rgba(0, 0, 0, .8)',
               }}
               key={date.format('YYYY-MM-DD')}
             >
-              <span className="date">{index + 1}</span>{this.parseDay(date.day())}
+              <span className="date" style={headerCss.date}>{index + 1}</span>{this.parseDay(date.day())}
             </li>
           )
          }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Cell from './Cell';
-import './style/row.css';
+// import './style/row.css';
 
 class Row extends Component {
   static propTypes = {
@@ -40,7 +40,13 @@ class Row extends Component {
     const { currentMoment } = this.props;
     const cells = this.renderCells(currentMoment);
     return (
-      <div className="row">
+      <div
+        className="row"
+        style={{
+          display: 'flex',
+          flexWrap: 'nowrap',
+        }}
+      >
         { cells }
       </div>
     );

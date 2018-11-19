@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './style/cell.css';
-import moment from 'moment';
+// import './style/cell.css';
+
+const cellCss = {
+  cell: {
+    flexShrink: 0,
+    border: '1px solid rgba(0,0,0, .45)',
+    borderTop: 0,
+    borderLeft: 0,
+  },
+  cellDiv: {
+    fontSize: 14,
+    color: 'rgba(0, 0, 0, .45)',
+  },
+};
 
 class Cell extends Component {
   static propTypes = {
@@ -23,6 +35,7 @@ class Cell extends Component {
   render () {
     const { width, height, data, isToday } = this.props;
     const cellStyle = {
+      ...cellCss.cell,
       width,
       height,
       position: 'relative',
@@ -60,6 +73,7 @@ class Cell extends Component {
     const dStartMinute = parseInt(d.startTime.split(':')[1]);
     const dEndMinute = parseInt(d.endTime.split(':')[1]);
     const liStyle = {
+      ...cellCss.cellDiv,
       height: dEndMinute - dStartMinute / 60 * height,
       width,
       background: 'rgba(0, 200, 0, .8)',
