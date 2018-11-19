@@ -24,6 +24,7 @@ class Body extends Component {
   }
 
   renderRows = (data) => {
+    const { currentMoment } = this.props;
     return times.map((time, index) => {
       const tStartTime = moment(time, 'HH:mm');
       const tEndTime = moment(times[index + 1], 'HH:mm');
@@ -32,7 +33,8 @@ class Body extends Component {
         const endTime = moment(d.endTime, 'HH:mm');
         return (startTime.isAfter(tStartTime) || startTime.isSame(tStartTime)) && (endTime.isBefore(tEndTime) || endTime.isSame(tEndTime));
       });
-      return <Row key={time} data={filterData} />;
+      const isTime = (currentMoment.isAfter(tStartTime) || currentMoment.isSame(tStartTime)) && (currentMoment.isBefore(tEndTime) || currentMoment.isSame(tEndTime))
+      return <Row isTime={isTime} key={time} data={filterData} />;
     });
   }
 
