@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import unionBy from 'lodash.uniqby';
 import Timeline from './Timeline';
 import Header from './Header';
 import Body from './Body';
@@ -12,6 +14,7 @@ class TimeTable extends Component {
     headerHeight: PropTypes.number,
     headerWidth: PropTypes.number,
     data: PropTypes.array,
+    groupBy: PropTypes.string,
   }
   static defaultProps = {
     width: 600,
@@ -24,6 +27,7 @@ class TimeTable extends Component {
   state = {
     scrollLeft: 0,
     scrollTop: 0,
+    currentMoment: moment(),
   }
 
   handleScroll = (e) => {
@@ -57,16 +61,40 @@ class TimeTable extends Component {
     this[name] = ref;
   }
 
+  renderHeader = (data, groupBy) => {
+    if (!groupBy) {
+      const { currentMoment } = this.state;
+      const header = [];
+      for (let date = 1; date <= currentMoment.daysInMonth(); date++) {
+        const value = moment().set({
+          'year': currentMoment.year(),
+          'date': date,
+          'month': currentMoment.month(),
+        });
+        header.push({
+          key: value.format('YYYY-MM-DD'),
+          value,
+        });
+      }
+      return header;
+    }
+    return unionBy(data.map(d => ({
+      key: d.id,
+      value: d[groupBy],
+    })), 'value');
+  }
+
   render() {
-    const { width, height, headerHeight, headerWidth, data } = this.props;
+    const { width, height, headerHeight, headerWidth, data, groupBy } = this.props;
+    const header = this.renderHeader(data, groupBy);
     return (
       <div style={{ ...commonCss.timeTable, width, height }} className="time-table">
         <div className="timeline-box" style={commonCss.timelineBox}>
           <Timeline saveRef={this.saveRef} onScroll={this.handleScroll} />
         </div>
         <div className="timeline-body" style={{ ...commonCss.timelineBody, width: width - headerWidth }}>
-          <Header saveRef={this.saveRef} height={headerHeight} onScroll={this.handleScroll} />
-          <Body data={data} saveRef={this.saveRef} height={height - headerHeight} onScroll={this.handleScroll} />
+          <Header header={header} saveRef={this.saveRef} height={headerHeight} onScroll={this.handleScroll} />
+          <Body data={data} groupBy={groupBy} header={header} saveRef={this.saveRef} height={height - headerHeight} onScroll={this.handleScroll} />
         </div>
       </div>
     );

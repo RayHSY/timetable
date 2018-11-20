@@ -1,6 +1,6 @@
 export default {
   timeTable: {
-    display: 'none',
+    display: 'flex',
     width: '100%',
     height: '100%',
     overflow: 'hidden',
@@ -13,5 +13,6 @@ export default {
   timelineBody: {
     width: '100%',
     height: '100%',
+    border: '1px solid #000',
   },
 };

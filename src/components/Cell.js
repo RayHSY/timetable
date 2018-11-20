@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 // import './style/cell.css';
 
 const cellCss = {
@@ -58,14 +59,16 @@ class Cell extends Component {
       left: width * 0.5 - 5,
     };
 
+    console.log('data: ')
+    console.log(data)
     if (data.length === 0) {
       return (
         <div
           className="cell"
           style={cellStyle}
         >
-        <li style={{ width, height }}></li>
-        { isToday ? <div style={todayStyle}><span style={circleStyle}></span></div> : null}
+          <div style={{ width, height }} />
+          { isToday ? <div style={todayStyle}><span style={circleStyle} /></div> : null}
         </div>
       );
     }
@@ -84,8 +87,8 @@ class Cell extends Component {
         className="cell"
         style={cellStyle}
       >
-        <li style={liStyle}>{`${d.name}  ${d.teacher}`}</li>
-        { isToday ? <div style={todayStyle}></div> : null}
+        <div style={liStyle}>{d.courseCategoryName}</div>
+        { isToday ? <div style={todayStyle} /> : null}
       </div>
     );
   }

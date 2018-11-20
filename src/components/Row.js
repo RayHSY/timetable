@@ -9,6 +9,8 @@ class Row extends Component {
     currentMoment: PropTypes.object,
     data: PropTypes.array,
     isTime: PropTypes.bool,
+    header: PropTypes.array,
+    groupBy: PropTypes.string,
   }
   static defaultProps = {
     currentMoment: moment(),
@@ -21,19 +23,13 @@ class Row extends Component {
   }
 
   renderCells = (currentMoment) => {
-    const { data, isTime } = this.props;
-    const dates = [];
-    for (let date = 1; date <= moment(currentMoment).daysInMonth(); date++) {
-      dates.push({
-        time: moment().set({
-          'year': currentMoment.year(),
-          'date': date,
-          'month': currentMoment.month(),
-        }),
-        data: data.filter(d => moment(d.date).date() === date),
-      });
-    }
-    return dates.map(d => <Cell isToday={isTime && d.time.date() === currentMoment.date()} key={d.time.date()} data={d.data} />);
+    const { data, isTime, header, groupBy } = this.props;
+    return header.map(h => <Cell
+      isToday={isTime && moment.isMoment(h.value) && h.value.date() === currentMoment.date()}
+      key={h.key}
+      groupBy={h.groupBy}
+      data={data.filter(d => moment.isMoment(h.value) ? d.date === h.value.format('YYYY-MM-DD') : d[groupBy] === h.value)}
+    />);
   }
 
   render () {

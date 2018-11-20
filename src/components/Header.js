@@ -42,9 +42,11 @@ class Header extends Component {
     onScroll: PropTypes.func,
     currentMoment: PropTypes.object,
     saveRef: PropTypes.func,
+    header: PropTypes.array,
   }
   static defaultProps = {
     height: 40,
+    header: [],
     currentMoment: moment(),
   }
 
@@ -79,37 +81,40 @@ class Header extends Component {
   }
 
   render () {
-    const { height, onScroll, currentMoment } = this.props;
+    const { height, onScroll, currentMoment, header } = this.props;
     const headerSt = {
       height,
     };
-    const dates = [];
-    for (let d = 1; d <= moment(currentMoment).daysInMonth(); d++) {
-      dates.push(moment().set({
-        'year': currentMoment.year(),
-        'date': d,
-        'month': currentMoment.month(),
-      }));
-    }
+
+    // const dates = [];
+    // for (let d = 1; d <= moment(currentMoment).daysInMonth(); d++) {
+    //   dates.push(moment().set({
+    //     'year': currentMoment.year(),
+    //     'date': d,
+    //     'month': currentMoment.month(),
+    //   }));
+    // }
     
     return (
       <div style={{...headerCss.timeHeader, ...headerSt}} className="time-header">
         <ul ref={this.bind} style={{...headerCss.timeheaderUl, ...headerSt}} onScroll={onScroll}>
-         {
-           dates.map((date, index) =>
-            <li
-              style={{
-                ...headerCss.timeheaderLi,
-                ...headerSt,
-                lineHeight: height + 'px',
-                color: index === currentMoment.date() - 1 ? 'red' : 'rgba(0, 0, 0, .8)',
-              }}
-              key={date.format('YYYY-MM-DD')}
-            >
-              <span className="date" style={headerCss.date}>{index + 1}</span>{this.parseDay(date.day())}
-            </li>
+          {
+            header.map(h =>
+              <li
+                style={{
+                  ...headerCss.timeheaderLi,
+                  ...headerSt,
+                  lineHeight: height + 'px',
+                  color: moment.isMoment(h.value) && h.value.format('YYYY-MM-DD') === currentMoment.format('YYYY-MM-DD') ? 'red' : 'rgba(0, 0, 0, .8)',
+                }}
+                key={h.key}
+              >
+                {
+                  moment.isMoment(h.value) ? h.value.format('MM月DD') : h.value
+                }
+              </li>
           )
-         }
+          }
         </ul>
       </div>
     );
