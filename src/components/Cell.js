@@ -6,7 +6,7 @@ import moment from 'moment';
 const cellCss = {
   cell: {
     flexShrink: 0,
-    border: '1px solid rgba(0,0,0, .45)',
+    border: '1px solid rgb(225, 228,236)',
     borderTop: 0,
     borderLeft: 0,
     flex: 1,
@@ -23,6 +23,7 @@ class Cell extends Component {
     isToday: PropTypes.bool,
     cells: PropTypes.object,
     status: PropTypes.object,
+    hiddenBorder: PropTypes.bool,
   }
   static defaultProps = {
     isToday: false,
@@ -33,17 +34,18 @@ class Cell extends Component {
   }
 
   render () {
-    const { data, isToday, cells, status } = this.props;
+    const { data, isToday, cells, status, hiddenBorder } = this.props;
     const cellStyle = {
       ...cellCss.cell,
       minWidth: cells.minWidth,
       height: cells.height,
       position: 'relative',
+      borderRight: hiddenBorder ? 0 : '1px solid rgb(225, 228,236)',
     };
     const todayStyle = {
       height: 1,
       width: '100%',
-      background: 'red',
+      background: 'rgba(227,98,130,1)',
       top: moment().minute() / 60 * cells.height,
       position: 'absolute',
     };
@@ -52,7 +54,7 @@ class Cell extends Component {
       height: 5,
       width: 5,
       borderRadius: '50%',
-      background: 'red',
+      background: 'rgba(227,98,130,1)',
       position: 'absolute',
       top: -1,
       left: cells.minWidth * 0.5 - 5,

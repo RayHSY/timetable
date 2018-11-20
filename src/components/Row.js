@@ -30,11 +30,12 @@ class Row extends Component {
   renderCells = (currentMoment) => {
     const { data, isTime, header } = this.props;
     const { groupBy, cells, status } = this.context;
-    return header.map(h => <Cell
+    return header.map((h, index) => <Cell
       isToday={isTime && moment.isMoment(h.value) && h.value.date() === currentMoment.date()}
       key={h.key}
       cells={cells}
       status={status}
+      hiddenBorder={index === header.length - 1}
       data={data.filter(d => moment.isMoment(h.value) ? d.date === h.value.format('YYYY-MM-DD') : d[groupBy] === h.value)}
     />);
   }

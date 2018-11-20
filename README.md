@@ -29,16 +29,10 @@ status|课时状态或类型，可以决定课程颜色值|string
 minWidth|格子最小宽度|number|120
 height|格子高度|number|80
 
-#### status示例
-```js
-  options = {
-    status: {
-      // 上课状态
-      inClass: '#345678',
-      // or 课程类型
-      math: '#123456',
-      english: '##456456'
-    }
-  }
-```
+#### status
+参数|说明|类型|默认值
+-|-|-|-
+border|格子边框颜色及提示|string|
+backgroud|格子内容颜色|string|
+text|状态显示|string
 

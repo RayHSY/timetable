@@ -9,7 +9,7 @@ const headerCss = {
     width: '100%',
     height: 50,
     overflow: 'hidden',
-    borderBottom: '1px solid lightblue',
+    boxShadow: 'rgb(198, 204, 221) 0px 2px 3px',
   },
   
   timeheaderUl: {
@@ -98,12 +98,12 @@ class Header extends Component {
                   ...headerSt,
                   minWidth: cells.minWidth,
                   lineHeight: height + 'px',
-                  color: moment.isMoment(h.value) && h.value.format('YYYY-MM-DD') === currentMoment.format('YYYY-MM-DD') ? 'red' : 'rgba(0, 0, 0, .8)',
+                  color: moment.isMoment(h.value) && h.value.format('YYYY-MM-DD') === currentMoment.format('YYYY-MM-DD') ? 'rgba(230, 117, 145, 1)' : 'rgba(71, 76, 89, 1)',
                 }}
                 key={h.key}
               >
                 {
-                  moment.isMoment(h.value) ? h.value.format('MM月DD') : h.value
+                  moment.isMoment(h.value) ? h.value.format('MM月DD日') : h.value
                 }
               </li>
           )

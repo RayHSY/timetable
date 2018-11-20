@@ -1,16 +1,19 @@
 export default {
   status: {
     cancel: {
-      border: 'rgba(255,0,25,.8)',
-      background: 'rgba(255,0,25,.3)',
+      border: 'rgba(235,96,132,1)',
+      background: 'rgba(251,235, 239,1)',
+      text: '取消/请假',
     },
     inClass: {
-      border: 'rgba(0,255,25,.8)',
-      background: 'rgba(0,255,25,.3)',
+      border: 'rgba(133,227,139,1)',
+      background: 'rgba(238,253,244,1)',
+      text: '已结课',
     },
     planClass: {
-      border: 'rgba(240,255,25,.8)',
-      background: 'rgba(240,255,25,.3)',
+      border: 'rgba(244,175,99,1)',
+      background: 'rgba(252,244,236,1)',
+      text: '排课中',
     },
   },
   cells: {

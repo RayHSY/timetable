@@ -22,7 +22,7 @@ const timelineCss = {
   },
   
   timelineLi: {
-    color: 'rgba(0, 0, 0, .45)',
+    color: 'rgb(182, 187, 189)',
     position: 'relative',
   },
   
@@ -30,6 +30,7 @@ const timelineCss = {
     position: 'absolute',
     top: -10,
     left: 10,
+    fontSize: 12,
   },
 };
 
