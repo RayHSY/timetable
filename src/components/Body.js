@@ -11,10 +11,9 @@ class Body extends Component {
     height: PropTypes.number,
     currentMoment: PropTypes.object,
     onScroll: PropTypes.func,
-    saveRef: PropTypes.func,
     data: PropTypes.array,
     header: PropTypes.array,
-    groupBy: PropTypes.string,
+    saveRef: PropTypes.func,
   }
   static defaultProps = {
     currentMoment: moment(),
@@ -26,7 +25,7 @@ class Body extends Component {
   }
 
   renderRows = (data) => {
-    const { currentMoment, header, groupBy } = this.props;
+    const { currentMoment, header } = this.props;
     return times.map((time, index) => {
       const tStartTime = moment(time, 'HH:mm');
       const tEndTime = moment(times[index + 1], 'HH:mm');
@@ -36,7 +35,7 @@ class Body extends Component {
         return (startTime.isAfter(tStartTime) || startTime.isSame(tStartTime)) && (endTime.isBefore(tEndTime) || endTime.isSame(tEndTime));
       });
       const isTime = (currentMoment.isAfter(tStartTime) || currentMoment.isSame(tStartTime)) && (currentMoment.isBefore(tEndTime) || currentMoment.isSame(tEndTime));
-      return <Row groupBy={groupBy} isTime={isTime} key={time} data={filterData} header={header} />;
+      return <Row isTime={isTime} key={time} data={filterData} header={header} />;
     });
   }
 

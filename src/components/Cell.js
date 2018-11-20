@@ -9,6 +9,7 @@ const cellCss = {
     border: '1px solid rgba(0,0,0, .45)',
     borderTop: 0,
     borderLeft: 0,
+    flex: 1,
   },
   cellDiv: {
     fontSize: 14,
@@ -18,14 +19,12 @@ const cellCss = {
 
 class Cell extends Component {
   static propTypes = {
-    width: PropTypes.number,
-    height: PropTypes.number,
     data: PropTypes.array,
     isToday: PropTypes.bool,
+    cells: PropTypes.object,
+    status: PropTypes.object,
   }
   static defaultProps = {
-    width: 100,
-    height: 60,
     isToday: false,
   }
 
@@ -34,18 +33,18 @@ class Cell extends Component {
   }
 
   render () {
-    const { width, height, data, isToday } = this.props;
+    const { data, isToday, cells, status } = this.props;
     const cellStyle = {
       ...cellCss.cell,
-      width,
-      height,
+      minWidth: cells.minWidth,
+      height: cells.height,
       position: 'relative',
     };
     const todayStyle = {
       height: 1,
       width: '100%',
       background: 'red',
-      top: moment().minute() / 60 * height,
+      top: moment().minute() / 60 * cells.height,
       position: 'absolute',
     };
     const circleStyle = {
@@ -56,18 +55,15 @@ class Cell extends Component {
       background: 'red',
       position: 'absolute',
       top: -1,
-      left: width * 0.5 - 5,
+      left: cells.minWidth * 0.5 - 5,
     };
-
-    console.log('data: ')
-    console.log(data)
     if (data.length === 0) {
       return (
         <div
           className="cell"
           style={cellStyle}
         >
-          <div style={{ width, height }} />
+          <div style={{ width: cells.minWidth, height: cells.height }} />
           { isToday ? <div style={todayStyle}><span style={circleStyle} /></div> : null}
         </div>
       );
@@ -77,10 +73,10 @@ class Cell extends Component {
     const dEndMinute = parseInt(d.endTime.split(':')[1]);
     const liStyle = {
       ...cellCss.cellDiv,
-      height: dEndMinute - dStartMinute / 60 * height,
-      width,
-      background: 'rgba(0, 200, 0, .8)',
-      borderLeft: '3px solid red',
+      height: dEndMinute - dStartMinute / 60 * cells.height,
+      width: '100%',
+      background: status[d.status].background,
+      borderLeft: `3px solid ${status[d.status].border}`,
     };
     return (
       <div

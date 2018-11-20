@@ -6,22 +6,34 @@ import Timeline from './Timeline';
 import Header from './Header';
 import Body from './Body';
 import commonCss from './style/common';
+import defaultOptions from './utils/options';
 
 class TimeTable extends Component {
   static propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
     headerHeight: PropTypes.number,
-    headerWidth: PropTypes.number,
+    timelineWidth: PropTypes.number,
     data: PropTypes.array,
     groupBy: PropTypes.string,
+    status: PropTypes.object,
+    cells: PropTypes.object,
   }
   static defaultProps = {
     width: 600,
     height: 400,
     headerHeight: 40,
-    headerWidth: 60,
+    timelineWidth: 60,
     data: [],
+    groupBy: '',
+    ...defaultOptions,
+  }
+
+  static childContextTypes = {
+    groupBy: PropTypes.string,
+    options: PropTypes.object,
+    status: PropTypes.object,
+    cells: PropTypes.object,
   }
 
   state = {
@@ -29,6 +41,12 @@ class TimeTable extends Component {
     scrollTop: 0,
     currentMoment: moment(),
   }
+
+  getChildContext = () => ({
+    groupBy: this.props.groupBy,
+    status: this.props.status,
+    cells: this.props.cells,
+  })
 
   handleScroll = (e) => {
     const { scrollLeft, scrollTop } = this;
@@ -85,16 +103,17 @@ class TimeTable extends Component {
   }
 
   render() {
-    const { width, height, headerHeight, headerWidth, data, groupBy } = this.props;
+    const { width, height, headerHeight, timelineWidth, data, groupBy, cells } = this.props;
     const header = this.renderHeader(data, groupBy);
+    
     return (
       <div style={{ ...commonCss.timeTable, width, height }} className="time-table">
         <div className="timeline-box" style={commonCss.timelineBox}>
-          <Timeline saveRef={this.saveRef} onScroll={this.handleScroll} />
+          <Timeline cells={cells} saveRef={this.saveRef} onScroll={this.handleScroll} />
         </div>
-        <div className="timeline-body" style={{ ...commonCss.timelineBody, width: width - headerWidth }}>
-          <Header header={header} saveRef={this.saveRef} height={headerHeight} onScroll={this.handleScroll} />
-          <Body data={data} groupBy={groupBy} header={header} saveRef={this.saveRef} height={height - headerHeight} onScroll={this.handleScroll} />
+        <div className="timeline-body" style={{ ...commonCss.timelineBody, width: width - timelineWidth }}>
+          <Header header={header} cells={cells} saveRef={this.saveRef} height={headerHeight} onScroll={this.handleScroll} />
+          <Body data={data} header={header} saveRef={this.saveRef} height={height - headerHeight} onScroll={this.handleScroll} />
         </div>
       </div>
     );

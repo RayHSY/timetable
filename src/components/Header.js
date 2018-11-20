@@ -24,8 +24,8 @@ const headerCss = {
   },
   
   timeheaderLi: {
-    /* flex: 1, */
-    width: 100,
+    flex: 1,
+    minWidth: 100,
     flexShrink: 0,
     textAlign: 'center',
     cursor: 'pointer',
@@ -43,6 +43,7 @@ class Header extends Component {
     currentMoment: PropTypes.object,
     saveRef: PropTypes.func,
     header: PropTypes.array,
+    cells: PropTypes.object,
   }
   static defaultProps = {
     height: 40,
@@ -51,7 +52,7 @@ class Header extends Component {
   }
 
   componentDidMount () {
-    this.timeUl.scrollLeft = (this.props.currentMoment.date() - 3) * 100;
+    this.timeUl.scrollLeft = (this.props.currentMoment.date() - 3) * this.props.cells.minWidth;
   }
 
   parseDay = (day) => {
@@ -81,19 +82,10 @@ class Header extends Component {
   }
 
   render () {
-    const { height, onScroll, currentMoment, header } = this.props;
+    const { height, onScroll, currentMoment, header, cells } = this.props;
     const headerSt = {
       height,
     };
-
-    // const dates = [];
-    // for (let d = 1; d <= moment(currentMoment).daysInMonth(); d++) {
-    //   dates.push(moment().set({
-    //     'year': currentMoment.year(),
-    //     'date': d,
-    //     'month': currentMoment.month(),
-    //   }));
-    // }
     
     return (
       <div style={{...headerCss.timeHeader, ...headerSt}} className="time-header">
@@ -104,6 +96,7 @@ class Header extends Component {
                 style={{
                   ...headerCss.timeheaderLi,
                   ...headerSt,
+                  minWidth: cells.minWidth,
                   lineHeight: height + 'px',
                   color: moment.isMoment(h.value) && h.value.format('YYYY-MM-DD') === currentMoment.format('YYYY-MM-DD') ? 'red' : 'rgba(0, 0, 0, .8)',
                 }}

@@ -22,7 +22,6 @@ const timelineCss = {
   },
   
   timelineLi: {
-    height: 60,
     color: 'rgba(0, 0, 0, .45)',
     position: 'relative',
   },
@@ -40,14 +39,14 @@ class Timeline extends Component {
     onScroll: PropTypes.func,
     currentMoment: PropTypes.object,
     saveRef: PropTypes.fun,
+    cells: PropTypes.object,
   }
   static defaultProps = {
-    height: 400,
     currentMoment: moment(),
   }
 
   componentDidMount () {
-    this.timeline.scrollTop = (this.props.currentMoment.hour() - 3) * 60;
+    this.timeline.scrollTop = (this.props.currentMoment.hour() - 3) * this.props.cells.height;
   }
 
   bind = (ref) => {
@@ -56,12 +55,12 @@ class Timeline extends Component {
   }
 
   render () {
-    const { onScroll } = this.props;
+    const { onScroll, cells } = this.props;
     return (
       <div className="timeline" style={timelineCss.timeline}>
         <ul style={timelineCss.timelineUl} ref={this.bind} onScroll={onScroll}>
           {
-            times.map(time => <li style={timelineCss.timelineLi} key={time}><span className="time-context" style={timelineCss.timeContext}>{time === '00:00' ? null : time}</span></li>)
+            times.map(time => <li style={{...timelineCss.timelineLi, height: cells.height}} key={time}><span className="time-context" style={timelineCss.timeContext}>{time === '00:00' ? null : time}</span></li>)
           }
         </ul>
       </div>

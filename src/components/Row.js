@@ -10,7 +10,6 @@ class Row extends Component {
     data: PropTypes.array,
     isTime: PropTypes.bool,
     header: PropTypes.array,
-    groupBy: PropTypes.string,
   }
   static defaultProps = {
     currentMoment: moment(),
@@ -18,16 +17,24 @@ class Row extends Component {
     isTime: false,
   }
 
+  static contextTypes = {
+    groupBy: PropTypes.string,
+    cells: PropTypes.object,
+    status: PropTypes.object,
+  }
+
   constructor (props) {
     super(props);
   }
 
   renderCells = (currentMoment) => {
-    const { data, isTime, header, groupBy } = this.props;
+    const { data, isTime, header } = this.props;
+    const { groupBy, cells, status } = this.context;
     return header.map(h => <Cell
       isToday={isTime && moment.isMoment(h.value) && h.value.date() === currentMoment.date()}
       key={h.key}
-      groupBy={h.groupBy}
+      cells={cells}
+      status={status}
       data={data.filter(d => moment.isMoment(h.value) ? d.date === h.value.format('YYYY-MM-DD') : d[groupBy] === h.value)}
     />);
   }
