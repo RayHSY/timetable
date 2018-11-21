@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-// import './style/cell.css';
+import Popover from './Popover';
 
 const cellCss = {
   cell: {
@@ -85,7 +85,12 @@ class Cell extends Component {
         className="cell"
         style={cellStyle}
       >
-        <div style={liStyle}>{d.courseCategoryName}</div>
+        <Popover
+          title="cs"
+          content="cs2"
+        >
+          <div style={liStyle}>{d.courseCategoryName}</div>
+        </Popover>
         { isToday ? <div style={todayStyle} /> : null}
       </div>
     );

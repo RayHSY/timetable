@@ -6,7 +6,7 @@ import Timeline from './Timeline';
 import Header from './Header';
 import Body from './Body';
 import commonCss from './style/common';
-import defaultOptions from './utils/options';
+import { defaultOptions } from './utils/utils';
 
 class TimeTable extends Component {
   static propTypes = {
