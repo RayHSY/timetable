@@ -82,7 +82,7 @@ class Header extends Component {
   }
 
   render () {
-    const { height, onScroll, currentMoment, header, cells } = this.props;
+    const { height, onScroll, header, cells } = this.props;
     const headerSt = {
       height,
     };
@@ -98,12 +98,12 @@ class Header extends Component {
                   ...headerSt,
                   minWidth: cells.minWidth,
                   lineHeight: height + 'px',
-                  color: moment.isMoment(h.value) && h.value.format('YYYY-MM-DD') === currentMoment.format('YYYY-MM-DD') ? 'rgba(230, 117, 145, 1)' : 'rgba(71, 76, 89, 1)',
+                  color: moment.isMoment(h.value) && h.value.format('YYYY-MM-DD') === moment().format('YYYY-MM-DD') ? 'rgba(230, 117, 145, 1)' : 'rgba(71, 76, 89, 1)',
                 }}
                 key={h.key}
               >
                 {
-                  moment.isMoment(h.value) ? h.value.format('MM月DD日') : h.value
+                  moment.isMoment(h.value) ? h.value.format('DD日 ') + this.parseDay(h.value.day()) : h.value
                 }
               </li>
           )

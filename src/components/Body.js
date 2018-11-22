@@ -35,7 +35,7 @@ class Body extends Component {
         return (startTime.isAfter(tStartTime) || startTime.isSame(tStartTime)) && (endTime.isBefore(tEndTime) || endTime.isSame(tEndTime));
       });
       const isTime = (currentMoment.isAfter(tStartTime) || currentMoment.isSame(tStartTime)) && (currentMoment.isBefore(tEndTime) || currentMoment.isSame(tEndTime));
-      return <Row isTime={isTime} key={time} data={filterData} header={header} />;
+      return <Row currentMoment={currentMoment} isTime={isTime} key={time} data={filterData} header={header} />;
     });
   }
 

@@ -3,30 +3,29 @@ import PropTypes from 'prop-types';
 
 const popoverStyle = {
   wrapper: {
-    position: 'relative',
+    // position: 'relative',
   },
 
   popover: {
-    position: 'absolute',
-    width: '100%',
+    position: 'fixed',
+    width: 260,
     zIndex: 100,
     minWidth: 177,
     background: '#fff',
-    left: '88%',
-    top: '80%',
     boxShadow: '1px 1px 10px #ccc',
+    borderRadius: '5px',
     opacity: 0,
+    padding: '0 16px',
     transition: 'opacity .3s ease-in',
   },
 
   header: {
-    margin: '0 16px',
-    padding: '5px 0 4px',
+    padding: '6px 0',
     borderBottom: '1px solid #e8e8e8',
   },
 
   content: {
-    padding: '12px 16px',
+    padding: '10px 0',
   },
 };
 
@@ -42,12 +41,20 @@ class Popover extends Component {
     this.state = {
       isShow: false,
       opacity: 0,
+      screen: {
+        x: 0,
+        y: 0,
+      },
     };
   }
 
-  hoverShow = () => {
+  hoverShow = (e) => {
     this.setState({
       isShow: true,
+      screen: {
+        x: e.clientX,
+        y: e.clientY,
+      },
     });
 
     setTimeout(() => {
@@ -60,6 +67,10 @@ class Popover extends Component {
   hoverHidden = () => {
     this.setState({
       isShow: false,
+      screen: {
+        x: 0,
+        y: 0,
+      },
     });
 
     setTimeout(() => {
@@ -71,12 +82,13 @@ class Popover extends Component {
 
   render () {
     const { children, title, content } = this.props;
+    const { opacity, screen } = this.state;
     return (
       <div style={popoverStyle.wrapper} onMouseEnter={this.hoverShow} onMouseLeave={this.hoverHidden}>
         { children }
 
         { this.state.isShow ?
-          <div style={{...popoverStyle.popover, opacity: this.state.opacity}}>
+          <div style={{...popoverStyle.popover, opacity, top: screen.y, left: screen.x }}>
             <header style={popoverStyle.header}>{title}</header>
             <div style={popoverStyle.content}>{content}</div>
           </div> : null 

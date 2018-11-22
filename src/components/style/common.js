@@ -56,4 +56,25 @@ export default {
     flex: 1,
     flexShrink: 0,
   },
+
+  datepick: {
+    flex: 1,
+    textAlign: 'center',
+    display: 'inline-flex',
+    justifyContent: 'center',
+  },
+
+  arrowLeft: {
+    marginRight: 8,
+    fontSize: 12,
+    cursor: 'pointer',
+    lineHeight: '22px',
+  },
+
+  arrowRight: {
+    marginLeft: 8,
+    fontSize: 12,
+    lineHeight: '22px',
+    cursor: 'pointer',
+  },
 };
